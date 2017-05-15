@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MathDrawerGame2.Globals;
+using MathDrawerGame2.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,27 +9,21 @@ namespace MathDrawerGame2
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
+        UILayer uilayer;
         SpriteBatch spriteBatch;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            uilayer = new UILayer();
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            Textures.LoadTextures(this.Content);
+            uilayer.Add(new Button("Save", 5, 5, Textures.SAVE_ICON));
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void UnloadContent()
@@ -41,17 +37,12 @@ namespace MathDrawerGame2
             {
                 Exit();
             }
-
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
+            uilayer.Draw(gameTime, spriteBatch);
         }
     }
 }
